@@ -82,8 +82,8 @@
     <h1 class="h1">Crimson Education<br>
         TOEFL Student Center</h1>
     <div class="box">
-        <a href="http://example.com" class="button-link">Practice</a>
-        <a href="TOEFL test select page.html" class="button-link">Mock tests</a>
+        <a href="practice-select.html" class="button-link">Practice</a>
+        <a href="test-select.html" class="button-link">Mock tests</a>
     </div>
     <p class="expText">Welcome to our TOEFL Student Center landing page.<br>
     From here, use one of the buttons above to access our Crimson TOEFL program.</p>
