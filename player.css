@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Crimson Education — Apps Script test/drill player overrides
+   Link this AFTER the player's inline <style> block. It only fixes values
+   that were hardcoded and therefore can't be reached by retokenising :root.
+
+   Deploy to: docs/player.css → https://givemecookies1.github.io/TOEFL-hub/player.css
+   Requires tokens.css to be linked first.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Headings use the display face; body copy stays on Noto Sans.
+   -------------------------------------------------------------------------- */
+.intro-title,
+.results-title,
+.section-intro-card h2,
+.writing-task-header h3,
+#submit-modal h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Numerals. The spec defines no monospace face, so tabular figures do the
+   alignment job the old JetBrains Mono was doing.
+   -------------------------------------------------------------------------- */
+.timer,
+.time-display,
+.score-value,
+.question-number,
+.word-count,
+.question-counter {
+  font-family: var(--font-sans);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+/* --------------------------------------------------------------------------
+   Section badges — tints were hardcoded rgba() of the old accents.
+   -------------------------------------------------------------------------- */
+.section-badge.reading   { background: var(--reading-tint);   color: var(--reading-accent); }
+.section-badge.listening { background: var(--listening-tint); color: var(--listening-accent); }
+.section-badge.speaking  { background: var(--speaking-tint);  color: var(--speaking-accent); }
+.section-badge.writing   { background: var(--writing-tint);   color: var(--writing-accent); }
+
+.passage-title        { color: var(--reading-accent); }
+.writing-passage-title { color: var(--writing-accent); }
+
+/* --------------------------------------------------------------------------
+   Buttons — shadows were hardcoded to the old red.
+   -------------------------------------------------------------------------- */
+.btn-primary        { box-shadow: var(--shadow-xs); }
+.btn-primary:hover  { box-shadow: var(--shadow-md); }
+.btn-primary:active { box-shadow: var(--shadow-xs); background: var(--brand-900); }
+
+.btn-success        { background: var(--green-700); color: var(--white); }
+.btn-success:hover  { filter: none; background: var(--green-900); }
+
+.btn:focus-visible {
+  outline: 2px solid var(--brand-800);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Standalone link buttons (the "Go back to main page" link on the drill
+   results screen). Matches the hub treatment: back is secondary, not brand.
+   -------------------------------------------------------------------------- */
+.button-link,
+.button-back {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--text-md-lh);
+  font-weight: 600;
+  padding: 12px 20px;
+  border: 1px solid var(--brand-800);
+  border-radius: var(--radius-md);
+  background: var(--brand-800);
+  color: var(--white);
+  box-shadow: var(--shadow-xs);
+  transition: background-color var(--motion), border-color var(--motion),
+              box-shadow var(--motion), transform var(--motion);
+}
+
+.button-link:hover {
+  filter: none;
+  background: var(--brand-700);
+  border-color: var(--brand-700);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.button-link:active { transform: translateY(0); box-shadow: var(--shadow-xs); }
+
+.button-back {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  padding: 10px 16px;
+}
+
+.button-back:hover {
+  background: var(--neutral-50);
+  border-color: var(--neutral-200);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Surfaces that had literal #FFFFFF / rgba() baked in.
+   -------------------------------------------------------------------------- */
+.editor-content { background: var(--bg-card); }
+.top-bar        { background: rgba(250, 250, 251, 0.92); }  /* Neutral-25 */
+
+#submit-modal > div {
+  box-shadow: var(--shadow-2xl);
+  border-radius: var(--radius);
+}
+
+/* --------------------------------------------------------------------------
+   Word count uses the darker green step so it stays legible on white.
+   -------------------------------------------------------------------------- */
+.word-count.good { color: var(--green-900); }
+.word-count.low  { color: var(--yellow-900); }
+
+/* --------------------------------------------------------------------------
+   Quality floor.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .timer.danger { animation: none; }
+  .button-link:hover,
+  .btn-primary:hover { transform: none; }
+}

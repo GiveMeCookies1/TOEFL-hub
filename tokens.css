@@ -1,0 +1,152 @@
+/* ==========================================================================
+   Crimson Education — shared brand tokens
+   VARIABLES ONLY. No selectors beyond :root, so this file is safe to link
+   from any page without touching layout.
+
+   Deploy to: docs/tokens.css  →  https://givemecookies1.github.io/TOEFL-hub/tokens.css
+   Consumed by: the hub pages and every Apps Script test/drill player.
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..700&family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  /* ======================================================================
+     1. PALETTE — exact hexes from the Crimson spec. Nothing invented.
+     ====================================================================== */
+
+  /* Brand ramp (Red). PRIMARY lives at 800. */
+  --brand-50:  #FFEFEE;
+  --brand-100: #FFDAD7;
+  --brand-500: #F5170D;   /* Crimson — bright accent */
+  --brand-700: #A60D10;
+  --brand-800: #74070E;   /* Primary Red */
+  --brand-900: #5B0409;
+
+  /* Neutrals */
+  --neutral-25:  #FAFAFB; /* Page */
+  --neutral-50:  #F3F3F5;
+  --neutral-100: #E4E4E9;
+  --neutral-200: #C9C9D2; /* Pale Grey */
+  --neutral-400: #949698; /* Ash Grey */
+  --neutral-600: #6E6F70;
+  --neutral-700: #575859;
+  --neutral-800: #3F3F3F; /* Stone */
+  --neutral-900: #2E2E2E;
+  --white: #FFFFFF;
+
+  /* Status hues */
+  --green-100: #EDFDF4;
+  --green-700: #12C39A;   /* Success */
+  --green-900: #0C8065;   /* Success, as text on light */
+  --yellow-100: #FFF8ED;
+  --yellow-900: #BF7A00;  /* Warning */
+  --orange-100: #FFF2EF;
+  --orange-900: #B23209;  /* Error */
+  --blue-100: #EEF5FF;
+  --blue-500: #5898FF;    /* Info */
+
+  /* Categorical hues (section identity — not status) */
+  --indigo-100: #E3E3FC;
+  --indigo-800: #464AC9;  /* Indigo */
+  --mulberry-100: #FFE5F2;
+  --mulberry-500: #993D6A; /* Mulberry */
+
+  /* ======================================================================
+     2. FONTS
+     ====================================================================== */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-sans:    'Noto Sans', sans-serif;
+
+  /* ======================================================================
+     3. SCALES
+     ====================================================================== */
+  --text-xs: 13px;  --text-xs-lh: 18px;
+  --text-sm: 14px;  --text-sm-lh: 20px;
+  --text-md: 16px;  --text-md-lh: 24px;
+  --text-lg: 18px;  --text-lg-lh: 28px;
+  --text-xl: 20px;  --text-xl-lh: 30px;
+
+  --display-xs: 24px;  --display-xs-lh: 32px;
+  --display-sm: 30px;  --display-sm-lh: 38px;
+  --display-md: 36px;  --display-md-lh: 44px;
+
+  /* Radius. Interactive controls = md (8px). */
+  --radius-md:  0.5rem;
+  --radius-xl:  0.75rem;
+  --radius-2xl: 1rem;
+
+  /* Elevation — warm Crimson-tinted near-black rgb(30,10,12). */
+  --shadow-xs:  0px 1px 2px 0px rgba(30, 10, 12, 0.05);
+  --shadow-sm:  0px 1px 3px 0px rgba(30, 10, 12, 0.1), 0px 1px 2px -1px rgba(30, 10, 12, 0.1);
+  --shadow-md:  0px 4px 6px -1px rgba(30, 10, 12, 0.1), 0px 2px 4px -2px rgba(30, 10, 12, 0.06);
+  --shadow-lg:  0px 12px 16px -4px rgba(30, 10, 12, 0.08), 0px 4px 6px -2px rgba(30, 10, 12, 0.03), 0px 2px 2px -1px rgba(30, 10, 12, 0.04);
+  --shadow-xl:  0px 20px 24px -4px rgba(30, 10, 12, 0.08), 0px 8px 8px -4px rgba(30, 10, 12, 0.03), 0px 3px 3px -1.5px rgba(30, 10, 12, 0.04);
+  --shadow-2xl: 0px 24px 48px -12px rgba(30, 10, 12, 0.18), 0px 4px 4px -2px rgba(30, 10, 12, 0.04);
+
+  --motion: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ======================================================================
+     4. HUB ALIASES  (names used by the GitHub Pages stylesheet)
+     ====================================================================== */
+  --color-page:           var(--neutral-25);
+  --color-surface:        var(--white);
+  --color-border:         var(--neutral-100);
+  --color-text:           var(--neutral-900);
+  --color-text-muted:     var(--neutral-600);
+  --color-primary:        var(--brand-800);
+  --color-primary-hover:  var(--brand-700);
+  --color-primary-active: var(--brand-900);
+  --color-primary-tint:   var(--brand-50);
+  --color-on-primary:     var(--white);
+  --color-focus-ring:     var(--brand-800);
+
+  --content-max: 720px;
+
+  /* ======================================================================
+     5. TEST-PLAYER ALIASES  (names already used by the Apps Script files,
+        remapped onto brand values — so the player needs no rule rewrites)
+     ====================================================================== */
+  --bg-primary:    var(--white);
+  --bg-secondary:  var(--neutral-25);
+  --bg-card:       var(--white);
+  --bg-card-hover: var(--neutral-50);
+  --bg-input:      var(--neutral-25);
+
+  --border-color: var(--neutral-100);
+  --border-focus: var(--brand-800);
+
+  --text-primary:   var(--neutral-900);
+  --text-secondary: var(--neutral-700);
+  --text-muted:     var(--neutral-600);
+
+  --accent:       var(--brand-800);
+  --accent-hover: var(--brand-700);
+  --accent-glow:  var(--brand-50);
+
+  --success:    var(--green-900);
+  --success-bg: var(--green-100);
+  --warning:    var(--yellow-900);
+  --warning-bg: var(--yellow-100);
+  --danger:     var(--orange-900);
+  --danger-bg:  var(--orange-100);
+
+  /* Section identity. Deliberately avoids Orange and Yellow, which the spec
+     reserves for error and warning. */
+  --reading-accent:   var(--brand-800);
+  --reading-tint:     var(--brand-50);
+  --listening-accent: var(--indigo-800);
+  --listening-tint:   var(--indigo-100);
+  --speaking-accent:  var(--mulberry-500);
+  --speaking-tint:    var(--mulberry-100);
+  --writing-accent:   var(--green-900);
+  --writing-tint:     var(--green-100);
+
+  --font-body: var(--font-sans);
+  --font-mono: var(--font-sans);   /* spec defines no mono face; numerals are
+                                      handled with tabular-nums instead */
+
+  --radius:    var(--radius-xl);   /* 12px — cards, panels */
+  --radius-sm: var(--radius-md);   /*  8px — interactive controls */
+  --shadow:    var(--shadow-sm);
+  --transition: var(--motion);
+}
