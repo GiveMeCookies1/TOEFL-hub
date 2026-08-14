@@ -1,78 +1,321 @@
+/* ==========================================================================
+   Crimson Education — TOEFL Student Center
+   Hub stylesheet. Every value below is sourced from the Crimson design spec
+   (design.md / color-palette.md). No invented intermediate values.
+
+   Used by: index.html, practice-select.html, test-select.html
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400..700&family=Noto+Sans:wght@400;500;600;700&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  /* --- Brand ramp (Red). PRIMARY lives at 800, per spec. --- */
+  --brand-50:  #FFEFEE;
+  --brand-100: #FFDAD7;
+  --brand-500: #F5170D;  /* Crimson — bright accent */
+  --brand-700: #A60D10;
+  --brand-800: #74070E;  /* Primary Red */
+  --brand-900: #5B0409;
+
+  /* --- Neutrals --- */
+  --neutral-25:  #FAFAFB;  /* Page */
+  --neutral-50:  #F3F3F5;
+  --neutral-100: #E4E4E9;
+  --neutral-200: #C9C9D2;  /* Pale Grey */
+  --neutral-600: #6E6F70;
+  --neutral-800: #3F3F3F;  /* Stone */
+  --neutral-900: #2E2E2E;  /* Canonical dark surface */
+  --white: #FFFFFF;
+
+  /* --- Semantic roles --- */
+  --color-page:            var(--neutral-25);
+  --color-surface:         var(--white);
+  --color-border:          var(--neutral-100);
+  --color-text:            var(--neutral-900);
+  --color-text-muted:      var(--neutral-600);
+  --color-primary:         var(--brand-800);
+  --color-primary-hover:   var(--brand-700);
+  --color-primary-active:  var(--brand-900);
+  --color-primary-tint:    var(--brand-50);
+  --color-on-primary:      var(--white);
+  --color-focus-ring:      var(--brand-800);
+
+  /* --- Fonts --- */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-sans:    'Noto Sans', sans-serif;
+
+  /* --- Text scale (body / UI) --- */
+  --text-xs: 13px;  --text-xs-lh: 18px;
+  --text-sm: 14px;  --text-sm-lh: 20px;
+  --text-md: 16px;  --text-md-lh: 24px;
+  --text-lg: 18px;  --text-lg-lh: 28px;
+  --text-xl: 20px;  --text-xl-lh: 30px;
+
+  /* --- Display scale (headlines only) --- */
+  --display-xs: 24px;  --display-xs-lh: 32px;  /* tracking -0.01em */
+  --display-sm: 30px;  --display-sm-lh: 38px;  /* tracking -0.01em */
+  --display-md: 36px;  --display-md-lh: 44px;  /* tracking -0.02em */
+
+  /* --- Radius (Untitled UI 1:1). Interactive controls = md (8px). --- */
+  --radius-md:  0.5rem;
+  --radius-xl:  0.75rem;
+  --radius-2xl: 1rem;
+
+  /* --- Elevation. Warm Crimson-tinted near-black rgb(30,10,12). --- */
+  --shadow-xs: 0px 1px 2px 0px rgba(30, 10, 12, 0.05);
+  --shadow-sm: 0px 1px 3px 0px rgba(30, 10, 12, 0.1), 0px 1px 2px -1px rgba(30, 10, 12, 0.1);
+  --shadow-md: 0px 4px 6px -1px rgba(30, 10, 12, 0.1), 0px 2px 4px -2px rgba(30, 10, 12, 0.06);
+  --shadow-lg: 0px 12px 16px -4px rgba(30, 10, 12, 0.08), 0px 4px 6px -2px rgba(30, 10, 12, 0.03), 0px 2px 2px -1px rgba(30, 10, 12, 0.04);
+
+  /* --- Layout --- */
+  --content-max: 720px;
+  --page-pad-x: 24px;
+  --page-pad-y: 48px;
+  --stack-gap: 24px;
+  --grid-gap: 12px;
+
+  --motion: 160ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET + PAGE
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  padding: var(--page-pad-y) var(--page-pad-x) 64px;
+  min-height: 100vh;
+
+  background: var(--color-page);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--text-md-lh);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;   /* content flows from the top; long pages
+                                    (practice-select) no longer clip */
+  gap: var(--stack-gap);
+}
+
+/* Constrain every direct child to one readable column. */
+body > * {
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   3. LOGO / HEADER
+   Logo is image-based per spec — never recolour it.
+   -------------------------------------------------------------------------- */
+header {
+  display: flex;
+  justify-content: center;
+}
+
+header img {
+  width: 100%;
+  max-width: 260px;
+  height: auto;
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   4. TYPOGRAPHY
+   -------------------------------------------------------------------------- */
 .h1 {
-    font-size: 25px;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    text-align: center;
+  font-family: var(--font-display);
+  font-size: var(--display-md);
+  line-height: var(--display-md-lh);
+  letter-spacing: -0.02em;
+  font-weight: 700;
+  color: var(--color-text);
+  text-align: center;
+  text-wrap: balance;
 }
 
-/* Contain box properties here */ 
-.box, .drill-box, .test-box {
-    display: grid;
-    align-items: stretch;
-    gap: 10px;
-}
-
-.box {
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.drill-box {
-    grid-template-columns: repeat(5, 1fr);
-}
-
-.test-box {
-    grid-template-columns: repeat(3, 1fr);
-}
-
-@media (max-width: 480px) {
-    .box, .drill-box {
-        grid-template-columns: 1fr;
-    }
-}
-
-.button-link, .button-back {
-    padding: 10px 20px;
-    background: #950E0E;
-    color: #fff;
-    box-shadow: 0 2px 8px rgba(149,14,14,0.2);
-    text-decoration: none;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    transition: background-color 0.3s ease;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    width: 100%;
-    box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-}
-
-.button-link:hover {
-    filter: brightness(1.1);
-    border-color: #950E0E;
-    box-shadow: 0 4px 16px rgba(149,14,14,0.25);
-    transition: all 0.5s ease;
-    transform: translateY(-1px);
-}
-.button-link:active { transform: translateY(0); }
-
-.button-back {
-    box-sizing: content-box;
-    width: 100px;
+/* Section headings — e.g. "Reading" / "Listening" on practice-select. */
+.h2 {
+  font-family: var(--font-display);
+  font-size: var(--display-xs);
+  line-height: var(--display-xs-lh);
+  letter-spacing: -0.01em;
+  font-weight: 600;
+  color: var(--color-text);
+  text-align: left;
 }
 
 .expText {
-    font-size: 20px;
-    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    text-align: left;
+  font-family: var(--font-sans);
+  font-size: var(--text-xl);
+  line-height: var(--text-xl-lh);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  text-align: center;
+  text-wrap: pretty;
 }
 
-/* Body properties here */
-body { 
-    background: linear-gradient(135deg, #FFFFFF, #F5F5F6);
-    flex-direction: column;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    }
+.expText strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+ul.expText {
+  padding-left: 1.25em;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+ul.expText li::marker { color: var(--color-primary); }
+
+/* --------------------------------------------------------------------------
+   5. BUTTON GRIDS
+   -------------------------------------------------------------------------- */
+.box,
+.drill-box,
+.test-box {
+  display: grid;
+  align-items: stretch;
+  gap: var(--grid-gap);
+}
+
+.box       { grid-template-columns: repeat(2, 1fr); }
+.test-box  { grid-template-columns: repeat(3, 1fr); }
+.drill-box { grid-template-columns: repeat(5, 1fr); }
+
+/* --------------------------------------------------------------------------
+   6. BUTTONS
+   Primary action = Primary Red. Radius = rounded-md (8px), per spec.
+   -------------------------------------------------------------------------- */
+.button-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  padding: 12px 20px;
+  width: 100%;
+
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: var(--text-md-lh);
+  font-weight: 600;
+
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  text-decoration: none;
+
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-xs);
+
+  transition:
+    background-color var(--motion),
+    border-color var(--motion),
+    box-shadow var(--motion),
+    transform var(--motion);
+}
+
+.button-link:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.button-link:active {
+  background: var(--color-primary-active);
+  border-color: var(--color-primary-active);
+  box-shadow: var(--shadow-xs);
+  transform: translateY(0);
+}
+
+.button-link:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* Secondary action. "Go back" is navigation, not a primary action, so it
+   does not carry the brand fill. Declared after .button-link so the
+   `class="button-link button-back"` pairing in the HTML resolves here. */
+.button-back {
+  width: auto;
+  justify-self: center;
+  align-self: center;
+  max-width: max-content;
+
+  padding: 10px 16px;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.button-back:hover {
+  background: var(--neutral-50);
+  border-color: var(--neutral-200);
+  color: var(--color-text);
+}
+
+.button-back:active {
+  background: var(--neutral-100);
+  border-color: var(--neutral-200);
+}
+
+/* --------------------------------------------------------------------------
+   7. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .drill-box { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --page-pad-y: 32px;
+    --page-pad-x: 16px;
+    --stack-gap: 20px;
+  }
+
+  .h1 {
+    font-size: var(--display-sm);
+    line-height: var(--display-sm-lh);
+    letter-spacing: -0.01em;
+  }
+
+  .expText {
+    font-size: var(--text-lg);
+    line-height: var(--text-lg-lh);
+  }
+
+  .box,
+  .test-box,
+  .drill-box {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. QUALITY FLOOR
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .button-link:hover { transform: none; }
+}
