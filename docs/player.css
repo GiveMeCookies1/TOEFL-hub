@@ -52,6 +52,25 @@
   outline-offset: 2px;
 }
 
+.exit-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-lh);
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: color var(--motion), border-color var(--motion), background-color var(--motion);
+}
+.exit-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--brand-50); }
+.exit-btn:focus-visible { outline: 2px solid var(--brand-800); outline-offset: 2px; }
+
 /* --------------------------------------------------------------------------
    Standalone link buttons (the "Go back to main page" link on the drill
    results screen). Matches the hub treatment: back is secondary, not brand.
