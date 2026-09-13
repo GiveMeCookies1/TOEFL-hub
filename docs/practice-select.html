@@ -21,14 +21,10 @@
         Speaking &amp; Writing are saved for your tutor to review.</p>
 
     <script>
-        // ============================================================
-        // CONFIG — the ONE unified Apps Script deployment + Drills sheet
-        // ============================================================
-        // Replace these two values after you deploy the drill-aware engine.
         const ENGINE_BASE   = "https://script.google.com/macros/s/AKfycbx9eTiq48XWGmvwmCS2Js3T_GJ3oh_Yaz40dQzY19Rxs27uNMAGUaN3EOB_EOx4N9VavQ/exec"
         const DRILLS_SHEET  = "1uFt4s_RC1TP6JcMk7tIXUVOtkH9Cfbwt2ee3Lfyxte0";
 
-        // set_id values must match column A of your DrillSets tab.
+        // set_id values
         const SETS_PER_SECTION = 5;
         const SECTIONS = [
             { key: "reading",   label: "Reading",   prefix: "R" },
@@ -67,7 +63,7 @@
             container.appendChild(box);
         });
 
-        // Debounced navigation (kept from your original)
+        // Debounced navigation
         function debounce(func, wait) {
             let timeout;
             return function() {
