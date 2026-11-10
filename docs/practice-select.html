@@ -16,6 +16,7 @@
     <h1 class="h1">Crimson Education<br>
         TOEFL Student Center</h1>
     <p class="expText">Please select a category.</p>
+    <p class="expText" id="drill-count"></p>
     <div class="box">
         <a href="drills.html?section=reading" class="button-link">Reading</a>
         <a href="drills.html?section=listening" class="button-link">Listening</a>
@@ -24,5 +25,32 @@
     </div>
     <p class="expText">Each drill of a given set will give you an exercise replicating the conditions of the exam for this section.</p>
 
+    <script>
+        const ENGINE_BASE  = "https://script.google.com/macros/s/AKfycbx9eTiq48XWGmvwmCS2Js3T_GJ3oh_Yaz40dQzY19Rxs27uNMAGUaN3EOB_EOx4N9VavQ/exec";
+        const DRILLS_SHEET = "1uFt4s_RC1TP6JcMk7tIXUVOtkH9Cfbwt2ee3Lfyxte0";
+
+        (async () => {
+            const el = document.getElementById("drill-count");
+            try {
+                const u = new URL(ENGINE_BASE);
+                u.searchParams.set("test", DRILLS_SHEET);
+                u.searchParams.set("mode", "list");
+                const res = await fetch(u);
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                const data = await res.json();   // { reading: [...], listening: [...], ... }
+
+                const total = Object.values(data).reduce((n, ids) => n + ids.length, 0);
+                el.textContent = "Currently, there " +
+                    (total === 1 ? "is 1 drill" : "are " + total + " drills") + " available.";
+
+                document.querySelectorAll('a[href^="drills.html?section="]').forEach(a => {
+                    const key = new URL(a.href).searchParams.get("section");
+                    a.textContent += " (" + (data[key] || []).length + ")";
+                });
+            } catch (err) {
+                el.remove();   // if it fails, the line just disappears quietly
+            }
+        })();
+    </script>
 </body>
 </html>
