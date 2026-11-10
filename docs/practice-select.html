@@ -2,9 +2,10 @@
 <html>
 
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>TOEFL landing page</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<!-- This is a test of flexbox body -->
 
 <body>
     <header>
@@ -14,97 +15,14 @@
     <a href="index.html" class="button-link button-back">Go back to main page</a>
     <h1 class="h1">Crimson Education<br>
         TOEFL Student Center</h1>
-    <p class="expText">Please select a practice page.</p>
-    <div id="drill-container"></div>
+    <p class="expText">Please select a category.</p>
+    <div class="box">
+        <a href="drills.html?section=reading" class="button-link">Reading</a>
+        <a href="drills.html?section=listening" class="button-link">Listening</a>
+        <a href="drills.html?section=speaking" class="button-link">Speaking</a>
+        <a href="drills.html?section=writing" class="button-link">Writing</a>
+    </div>
+    <p class="expText">Each drill of a given set will give you an exercise replicating the conditions of the exam for this section.</p>
 
-    <p class="expText" style="max-width:640px;">Pick a section and set. Reading &amp; Listening are auto-scored instantly.<br>
-        Speaking &amp; Writing are saved for your tutor to review.</p>
-
-    <script>
-        const ENGINE_BASE   = "https://script.google.com/macros/s/AKfycbx9eTiq48XWGmvwmCS2Js3T_GJ3oh_Yaz40dQzY19Rxs27uNMAGUaN3EOB_EOx4N9VavQ/exec"
-        const DRILLS_SHEET  = "1uFt4s_RC1TP6JcMk7tIXUVOtkH9Cfbwt2ee3Lfyxte0";
-
-        // Which sets exist is read from the sheet (via ?mode=list on the engine).
-        const SECTIONS = [
-            { key: "reading",   label: "Reading",   prefix: "R" },
-            { key: "listening", label: "Listening", prefix: "L" },
-            { key: "speaking",  label: "Speaking",  prefix: "S" },
-            { key: "writing",   label: "Writing",   prefix: "W" }
-        ];
-
-        function drillUrl(sectionKey, setId) {
-            const u = new URL(ENGINE_BASE);
-            u.searchParams.set("test", DRILLS_SHEET);   // spreadsheet id (reuses existing ?test= param)
-            u.searchParams.set("mode", "drill");
-            u.searchParams.set("section", sectionKey);
-            u.searchParams.set("set", setId);
-            return u.toString();
-        }
-
-        const container = document.getElementById("drill-container");
-
-        function setNumber(setId) {
-            const m = String(setId).match(/\d+/);
-            return m ? parseInt(m[0], 10) : 0;
-        }
-
-        function renderSections(setsBySection) {
-            container.innerHTML = "";
-            SECTIONS.forEach(sec => {
-                // Keep only IDs with this section's prefix (R1, L3...), sorted numerically
-                const ids = (setsBySection[sec.key] || [])
-                    .map(s => String(s).trim().toUpperCase())
-                    .filter(s => s.startsWith(sec.prefix))
-                    .sort((a, b) => setNumber(a) - setNumber(b));
-                if (ids.length === 0) return;               // hide empty sections entirely
-
-                const heading = document.createElement("h2");
-                heading.className = "h1";
-                heading.style.margin = "18px 0 8px";
-                heading.textContent = sec.label;
-                container.appendChild(heading);
-
-                const box = document.createElement("div");
-                box.className = "drill-box";
-                ids.forEach(setId => {
-                    const a = document.createElement("a");
-                    a.className = "button-link";
-                    a.href = drillUrl(sec.key, setId);
-                    a.textContent = sec.label + " " + setNumber(setId);
-                    box.appendChild(a);
-                });
-                container.appendChild(box);
-            });
-        }
-
-        async function loadSets() {
-            container.innerHTML = '<p class="expText">Loading practice sets…</p>';
-            try {
-                const u = new URL(ENGINE_BASE);
-                u.searchParams.set("test", DRILLS_SHEET);
-                u.searchParams.set("mode", "list");
-                const res = await fetch(u.toString());
-                if (!res.ok) throw new Error("HTTP " + res.status);
-                renderSections(await res.json());
-            } catch (err) {
-                console.error("Could not load set list:", err);
-                container.innerHTML = '<p class="expText">Couldn\'t load the practice sets. Please refresh the page.</p>';
-            }
-        }
-
-        // Stop double-clicks from firing two navigations (event delegation,
-        // so it also covers buttons created after the fetch finishes)
-        let navigating = false;
-        document.addEventListener("click", e => {
-            const link = e.target.closest(".button-link");
-            if (!link) return;
-            if (navigating) { e.preventDefault(); return; }
-            navigating = true;
-        });
-        // Reset if the student comes back via the browser's Back button
-        window.addEventListener("pageshow", () => { navigating = false; });
-
-        loadSets();
-    </script>
 </body>
 </html>
