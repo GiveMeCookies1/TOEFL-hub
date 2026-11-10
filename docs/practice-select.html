@@ -24,8 +24,7 @@
         const ENGINE_BASE   = "https://script.google.com/macros/s/AKfycbx9eTiq48XWGmvwmCS2Js3T_GJ3oh_Yaz40dQzY19Rxs27uNMAGUaN3EOB_EOx4N9VavQ/exec"
         const DRILLS_SHEET  = "1uFt4s_RC1TP6JcMk7tIXUVOtkH9Cfbwt2ee3Lfyxte0";
 
-        // set_id values
-        const SETS_PER_SECTION = 25;
+        // Which sets exist is read from the sheet (via ?mode=list on the engine).
         const SECTIONS = [
             { key: "reading",   label: "Reading",   prefix: "R" },
             { key: "listening", label: "Listening", prefix: "L" },
@@ -43,41 +42,69 @@
         }
 
         const container = document.getElementById("drill-container");
-        SECTIONS.forEach(sec => {
-            const heading = document.createElement("h2");
-            heading.className = "h1";
-            heading.style.margin = "18px 0 8px";
-            heading.textContent = sec.label;
-            container.appendChild(heading);
 
-            const box = document.createElement("div");
-            box.className = "drill-box";
-            for (let i = 1; i <= SETS_PER_SECTION; i++) {
-                const setId = sec.prefix + i;               // e.g. R1, L3, S5, W2
-                const a = document.createElement("a");
-                a.className = "button-link";
-                a.href = drillUrl(sec.key, setId);
-                a.textContent = sec.label + " " + i;
-                box.appendChild(a);
-            }
-            container.appendChild(box);
-        });
-
-        // Debounced navigation
-        function debounce(func, wait) {
-            let timeout;
-            return function() {
-                const context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(context, args), wait);
-            };
+        function setNumber(setId) {
+            const m = String(setId).match(/\d+/);
+            return m ? parseInt(m[0], 10) : 0;
         }
-        document.querySelectorAll(".button-link").forEach(button => {
-            button.addEventListener("click", debounce(function(event) {
-                event.preventDefault();
-                window.location.href = this.href;
-            }, 300));
+
+        function renderSections(setsBySection) {
+            container.innerHTML = "";
+            SECTIONS.forEach(sec => {
+                // Keep only IDs with this section's prefix (R1, L3...), sorted numerically
+                const ids = (setsBySection[sec.key] || [])
+                    .map(s => String(s).trim().toUpperCase())
+                    .filter(s => s.startsWith(sec.prefix))
+                    .sort((a, b) => setNumber(a) - setNumber(b));
+                if (ids.length === 0) return;               // hide empty sections entirely
+
+                const heading = document.createElement("h2");
+                heading.className = "h1";
+                heading.style.margin = "18px 0 8px";
+                heading.textContent = sec.label;
+                container.appendChild(heading);
+
+                const box = document.createElement("div");
+                box.className = "drill-box";
+                ids.forEach(setId => {
+                    const a = document.createElement("a");
+                    a.className = "button-link";
+                    a.href = drillUrl(sec.key, setId);
+                    a.textContent = sec.label + " " + setNumber(setId);
+                    box.appendChild(a);
+                });
+                container.appendChild(box);
+            });
+        }
+
+        async function loadSets() {
+            container.innerHTML = '<p class="expText">Loading practice sets…</p>';
+            try {
+                const u = new URL(ENGINE_BASE);
+                u.searchParams.set("test", DRILLS_SHEET);
+                u.searchParams.set("mode", "list");
+                const res = await fetch(u.toString());
+                if (!res.ok) throw new Error("HTTP " + res.status);
+                renderSections(await res.json());
+            } catch (err) {
+                console.error("Could not load set list:", err);
+                container.innerHTML = '<p class="expText">Couldn\'t load the practice sets. Please refresh the page.</p>';
+            }
+        }
+
+        // Stop double-clicks from firing two navigations (event delegation,
+        // so it also covers buttons created after the fetch finishes)
+        let navigating = false;
+        document.addEventListener("click", e => {
+            const link = e.target.closest(".button-link");
+            if (!link) return;
+            if (navigating) { e.preventDefault(); return; }
+            navigating = true;
         });
+        // Reset if the student comes back via the browser's Back button
+        window.addEventListener("pageshow", () => { navigating = false; });
+
+        loadSets();
     </script>
 </body>
 </html>
