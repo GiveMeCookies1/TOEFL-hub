@@ -22,6 +22,7 @@
         <a href="drills.html?section=listening" class="button-link">Listening</a>
         <a href="drills.html?section=speaking" class="button-link">Speaking</a>
         <a href="drills.html?section=writing" class="button-link">Writing</a>
+        <a href="drills.html?section=vocabulary" class="button-link">Vocabulary drills</a>
     </div>
     <p class="expText">Each drill of a given set will give you an exercise replicating the conditions of the exam for this section.</p>
 
@@ -43,7 +44,7 @@
                 el.textContent = "Currently, there " +
                     (total === 1 ? "is 1 drill" : "are " + total + " drills") + " available.";
 
-                document.querySelectorAll('a[href^="drills.html?section="]').forEach(a => {
+                document.querySelectorAll('a[href^="drills.html?="]').forEach(a => {
                     const key = new URL(a.href).searchParams.get("section");
                     a.textContent += " (" + (data[key] || []).length + ")";
                 });
