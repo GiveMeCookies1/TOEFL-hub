@@ -191,8 +191,8 @@ ul.expText li::marker { color: var(--color-primary); }
   gap: var(--grid-gap);
 }
 
-.box       { grid-template-columns: repeat(2, 1fr); }
-.test-box  { grid-template-columns: repeat(3, 1fr); }
+.box, .test-box       { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--grid-gap); }
+
 .drill-box { grid-template-columns: repeat(5, 1fr); }
 
 /* --------------------------------------------------------------------------
@@ -301,7 +301,7 @@ ul.expText li::marker { color: var(--color-primary); }
     line-height: var(--text-lg-lh);
   }
 
-  .box,
+  .box > .button-link {flex-basis: 100%;}
   .test-box,
   .drill-box {
     grid-template-columns: 1fr;
